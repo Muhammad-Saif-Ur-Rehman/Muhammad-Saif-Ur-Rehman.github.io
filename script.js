@@ -51,6 +51,22 @@ window.addEventListener('scroll', () => {
 });
 
 /* ================================
+   NAVIGATION — Hamburger Toggle
+   ================================ */
+const navToggle = document.getElementById('navToggle');
+
+navToggle.addEventListener('click', () => {
+  navbar.classList.toggle('nav-open');
+});
+
+// Close menu when a link is clicked
+document.querySelectorAll('.nav-links a').forEach((link) => {
+  link.addEventListener('click', () => {
+    navbar.classList.remove('nav-open');
+  });
+});
+
+/* ================================
    SCROLL REVEAL (IntersectionObserver)
    ================================ */
 const observer = new IntersectionObserver(

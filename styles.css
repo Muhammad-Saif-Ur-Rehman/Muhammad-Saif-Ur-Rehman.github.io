@@ -216,6 +216,42 @@ nav.scrolled {
     box-shadow: 0 0 24px rgba(0, 229, 255, .5);
 }
 
+/* Hamburger Toggle */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: 1px solid var(--border2);
+    padding: 7px;
+    cursor: pointer;
+    order: 3;
+    flex-shrink: 0;
+}
+
+.nav-toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--accent);
+    transition: transform .3s, opacity .2s;
+}
+
+.nav-open .nav-toggle span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.nav-open .nav-toggle span:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-open .nav-toggle span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
 /* ================================
    HERO SECTION
    ================================ */
@@ -251,6 +287,20 @@ nav.scrolled {
     right: 0;
 }
 
+.hero-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 48px;
+    align-items: center;
+    width: 100%;
+}
+
+.hero-left {
+    max-width: 640px;
+}
+
 .hero-eyebrow {
     font-family: var(--ff-mono);
     font-size: 11px;
@@ -270,10 +320,11 @@ nav.scrolled {
     width: 36px;
     height: 1px;
     background: var(--accent);
+    flex-shrink: 0;
 }
 
 .hero-h1 {
-    font-size: clamp(52px, 6.5vw, 96px);
+    font-size: clamp(42px, 5.5vw, 86px);
     font-weight: 800;
     line-height: .93;
     letter-spacing: -3px;
@@ -361,6 +412,7 @@ nav.scrolled {
     max-width: 500px;
     opacity: 0;
     animation: fadeIn 1s .9s forwards;
+    overflow-x: auto;
 }
 
 .t-p {
@@ -370,6 +422,7 @@ nav.scrolled {
 .t-o {
     color: var(--green);
     margin-top: 6px;
+    white-space: nowrap;
 }
 
 .t-c {
@@ -383,10 +436,6 @@ nav.scrolled {
 }
 
 .hero-right {
-    position: absolute;
-    right: 64px;
-    top: 50%;
-    transform: translateY(-50%);
     display: flex;
     flex-direction: column;
     gap: 1px;
@@ -1614,37 +1663,97 @@ footer p {
    RESPONSIVE — TABLET
    ================================ */
 @media (max-width: 1024px) {
+
+    /* Nav — show hamburger, collapse links */
     nav {
         padding: 16px 28px;
+        flex-wrap: wrap;
+    }
+
+    .nav-toggle {
+        display: flex;
     }
 
     .nav-links {
-        gap: 20px;
+        display: none;
+        width: 100%;
+        order: 4;
+        flex-direction: column;
+        gap: 0;
+        padding: 18px 0 8px;
+        border-top: 1px solid var(--border);
+        margin-top: 16px;
     }
 
+    .nav-open .nav-links {
+        display: flex;
+    }
+
+    .nav-links li a {
+        display: block;
+        padding: 12px 0;
+        font-size: 12px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .nav-links li:last-child a {
+        border-bottom: none;
+    }
+
+    .nav-hire {
+        display: none;
+    }
+
+    .nav-open .nav-hire {
+        display: inline-flex;
+        order: 5;
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+        margin-bottom: 6px;
+    }
+
+    /* Sections */
     section {
         padding: 80px 28px;
     }
 
+    /* Hero */
     #hero {
         padding: 110px 28px 70px;
     }
 
-    .hero-right {
-        right: 28px;
+    .hero-grid {
+        grid-template-columns: 1fr auto;
+        gap: 32px;
     }
 
+    .hero-right {
+        gap: 1px;
+    }
+
+    .hstat {
+        padding: 14px 20px;
+    }
+
+    .hstat-n {
+        font-size: 28px;
+    }
+
+    /* About, Contact */
     .about-grid,
     .ct-grid {
         grid-template-columns: 1fr;
         gap: 44px;
     }
 
+    /* Services, Skills */
     .svc-grid,
     .sk-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
+    /* Projects */
     .proj-grid {
         grid-template-columns: 1fr;
     }
@@ -1661,6 +1770,7 @@ footer p {
         display: none;
     }
 
+    /* Timeline */
     .tl-wrap {
         grid-template-columns: 1fr;
     }
@@ -1679,6 +1789,11 @@ footer p {
         text-align: left;
         padding: 18px 0;
     }
+
+    /* Contact form */
+    .frow {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ================================
@@ -1689,33 +1804,121 @@ footer p {
         padding: 13px 18px;
     }
 
-    .nav-links,
-    .nav-hire {
-        display: none;
-    }
-
     section {
         padding: 60px 18px;
     }
 
     #hero {
         padding: 90px 18px 50px;
+        min-height: auto;
     }
 
-    .hero-right,
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .hero-left {
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .hero-h1 {
+        font-size: clamp(28px, 9vw, 48px);
+        letter-spacing: -1.5px;
+        word-break: break-word;
+    }
+
+    .hero-eyebrow {
+        font-size: 9px;
+        letter-spacing: 2px;
+        flex-wrap: wrap;
+    }
+
+    .hero-sub {
+        font-size: 12px;
+        margin-bottom: 32px;
+    }
+
+    .hero-terminal {
+        font-size: 11px;
+        padding: 14px 16px;
+    }
+
+    .hero-right {
+        flex-direction: row;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .hstat {
+        flex: 1;
+        min-width: 70px;
+        padding: 12px 14px;
+        text-align: center;
+    }
+
+    .hstat:hover {
+        transform: none;
+    }
+
+    .hstat-n {
+        font-size: 24px;
+    }
+
+    .hstat-l {
+        font-size: 8px;
+        letter-spacing: 1px;
+    }
+
     .scroll-ind {
         display: none;
     }
 
-    .frow {
-        grid-template-columns: 1fr;
+    /* Section headings */
+    .s-head {
+        gap: 12px;
+        margin-bottom: 40px;
     }
 
+    /* Cert cards */
+    .cert {
+        padding: 12px 14px;
+    }
+
+    .cert-n {
+        font-size: 12px;
+    }
+
+    /* Service cards */
     .svc-grid,
     .sk-grid {
         grid-template-columns: 1fr;
     }
 
+    .svc {
+        padding: 24px 20px;
+    }
+
+    /* Project cards */
+    .pt {
+        font-size: 16px;
+    }
+
+    .pd {
+        font-size: 12px;
+    }
+
+    /* Contact */
+    .ct-heading {
+        font-size: 22px;
+    }
+
+    .ct-desc {
+        font-size: 11px;
+    }
+
+    /* Footer */
     footer {
         padding: 18px;
         flex-direction: column;
@@ -1727,6 +1930,7 @@ footer p {
         justify-content: center;
     }
 
+    /* Chat */
     .chat-fab {
         width: 50px;
         height: 50px;
@@ -1744,5 +1948,44 @@ footer p {
         left: 12px;
         bottom: 84px;
         width: auto;
+    }
+
+    /* Buttons */
+    .btn {
+        font-size: 10px;
+        letter-spacing: 1.2px;
+    }
+
+    .btn-cta {
+        padding: 12px 26px;
+    }
+
+    .btn-ghost {
+        padding: 11px 24px;
+    }
+}
+
+/* ================================
+   TOUCH DEVICES — Hide custom cursor
+   ================================ */
+@media (hover: none) and (pointer: coarse) {
+
+    #cur,
+    #cur-ring {
+        display: none !important;
+    }
+
+    body,
+    a,
+    button,
+    .btn,
+    .nav-hire,
+    .fsend,
+    .chat-btn,
+    .chat-fab,
+    .chat-close,
+    .qb,
+    .nav-toggle {
+        cursor: auto;
     }
 }
