@@ -199,8 +199,9 @@ async function sendMsg() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'llama3-8b-8192',
-        max_tokens: 400,
+        model: 'openai/gpt-oss-120b',
+        max_tokens: 150,
+        temperature: 0.5,
         messages: [
           { role: 'system', content: CHAT_CONTEXT },
           ...history,
