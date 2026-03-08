@@ -137,7 +137,7 @@ async function sendMsg() {
       throw new Error('API key not configured');
     }
 
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    const res = await fetch('https://silent-bonus-6e94.saif010415.workers.dev', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
