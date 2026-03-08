@@ -120,65 +120,6 @@ function showTyping() {
   msgsEl.scrollTop = msgsEl.scrollHeight;
 }
 
-// async function sendMsg() {
-//   const q = inputEl.value.trim();
-//   if (!q) return;
-
-//   inputEl.value = '';
-//   sendBtn.disabled = true;
-//   document.getElementById('quickBtns').style.display = 'none';
-
-//   appendMsg('user', q);
-//   history.push({ role: 'user', content: q });
-//   showTyping();
-
-//   try {
-//     if (!GROQ_API_KEY || GROQ_API_KEY === 'YOUR_GROQ_API_KEY_HERE') {
-//       throw new Error('API key not configured');
-//     }
-
-//     const res = await fetch('https://silent-bonus-6e94.saif010415.workers.dev', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Authorization': `Bearer ${GROQ_API_KEY}`,
-//       },
-//       body: JSON.stringify({
-//         model: GROQ_MODEL,
-//         max_tokens: 150,
-//         temperature: 0.5,
-//         messages: [
-//           { role: 'system', content: CHAT_CONTEXT },
-//           ...history,
-//         ],
-//       }),
-//     });
-
-//     const data = await res.json();
-//     document.getElementById('typing')?.remove();
-
-//     if (data.error) {
-//       throw new Error(data.error.message || 'API error');
-//     }
-
-//     const reply =
-//       data.choices?.[0]?.message?.content ||
-//       "Having trouble connecting. Reach out to Saif directly via the contact section!";
-
-//     history.push({ role: 'assistant', content: reply });
-//     appendMsg('ai', reply);
-//   } catch (e) {
-//     document.getElementById('typing')?.remove();
-//     const errorMsg = e.message === 'API key not configured'
-//       ? 'Chat is not configured yet. Please reach out to Saif via the contact section below!'
-//       : 'Having trouble connecting right now. Reach out to Saif directly via the contact section below!';
-//     appendMsg('ai', errorMsg);
-//   }
-
-//   sendBtn.disabled = false;
-//   inputEl.focus();
-// }
-
 
 async function sendMsg() {
   const q = inputEl.value.trim();
@@ -199,7 +140,7 @@ async function sendMsg() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'openai/gpt-oss-120b',
+        model: 'llama-3.3-70b-versatile',
         max_tokens: 150,
         temperature: 0.5,
         messages: [
