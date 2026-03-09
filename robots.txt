@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /config.js
+Disallow: /context.js
+Allow: /
+
+# Sitemap location
+Sitemap: https://muhammad-saif-ur-rehman.tech/sitemap.xml
