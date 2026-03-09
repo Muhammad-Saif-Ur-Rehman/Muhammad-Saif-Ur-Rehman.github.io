@@ -1,6 +1,5 @@
 User-agent: *
 Disallow: /config.js
-Disallow: /context.js
 Allow: /
 
 # Sitemap location
