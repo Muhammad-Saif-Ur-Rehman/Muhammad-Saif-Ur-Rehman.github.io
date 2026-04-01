@@ -196,25 +196,68 @@ inputEl.addEventListener('keydown', (e) => {
 });
 
 /* ================================
-   CONTACT FORM
+   CONTACT FORM — Web3Forms
    ================================ */
-function sendContact() {
-  const name = document.getElementById('cf-name').value.trim();
-  const email = document.getElementById('cf-email').value.trim();
-  const subject = document.getElementById('cf-subject').value.trim();
-  const msg = document.getElementById('cf-msg').value.trim();
-  const status = document.getElementById('form-status');
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const status = document.getElementById('form-status');
+    const submitBtn = contactForm.querySelector('.fsend');
 
-  if (!name || !email || !msg) {
-    status.textContent = '// Please fill in required fields';
-    status.style.color = 'var(--red)';
-    return;
-  }
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    status.textContent = '';
+    status.style.color = '';
 
-  window.location.href = `mailto:saif010415@gmail.com?subject=${encodeURIComponent(
-    subject || 'Portfolio Inquiry'
-  )}&body=${encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + msg)}`;
+    try {
+      const formData = new FormData(contactForm);
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
 
-  status.textContent = '// Opening your email client...';
-  status.style.color = 'var(--green)';
+      if (data.success) {
+        status.textContent = '// Message sent successfully! I\'ll get back to you shortly.';
+        status.style.color = 'var(--green)';
+        contactForm.reset();
+      } else {
+        status.textContent = '// Something went wrong. Please try again.';
+        status.style.color = 'var(--red)';
+      }
+    } catch (err) {
+      status.textContent = '// Network error. Please try again or email directly.';
+      status.style.color = 'var(--red)';
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send Message →';
+  });
 }
+
+/* ================================
+   SKILL TABS
+   ================================ */
+document.querySelectorAll('.skill-tab').forEach((tab) => {
+  tab.addEventListener('click', () => {
+    // Remove active from all tabs and panels
+    document.querySelectorAll('.skill-tab').forEach((t) => t.classList.remove('active'));
+    document.querySelectorAll('.skill-panel').forEach((p) => p.classList.remove('active'));
+
+    // Activate clicked tab and its panel
+    tab.classList.add('active');
+    const panel = document.getElementById('tab-' + tab.dataset.tab);
+    if (panel) panel.classList.add('active');
+  });
+});
+
+/* ================================
+   NAV HIRE — Glow on Scroll
+   ================================ */
+const navHire = document.querySelector('.nav-hire');
+window.addEventListener('scroll', () => {
+  if (navHire) {
+    navHire.classList.toggle('glow', window.scrollY > 300);
+  }
+});

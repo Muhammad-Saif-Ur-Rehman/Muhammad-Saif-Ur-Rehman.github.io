@@ -524,14 +524,17 @@ section {
 
 .s-num {
     font-family: var(--ff-mono);
-    font-size: 11px;
+    font-size: clamp(3rem, 5vw, 4rem);
     color: var(--accent);
     letter-spacing: 3px;
+    font-weight: 800;
+    line-height: 1;
+    opacity: .25;
 }
 
 .s-title {
     font-size: clamp(28px, 3.5vw, 46px);
-    font-weight: 800;
+    font-weight: 900;
     letter-spacing: -1px;
 }
 
@@ -1554,7 +1557,7 @@ footer {
     padding: 26px 64px;
     border-top: 1px solid var(--border);
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     position: relative;
     z-index: 1;
@@ -1660,9 +1663,198 @@ footer p {
 }
 
 /* ================================
+   AVAILABILITY BADGE
+   ================================ */
+.avail-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--ff-mono);
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 1px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp .8s .48s forwards;
+}
+
+.avail-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px rgba(16, 185, 129, .6);
+    animation: pulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+/* ================================
+   SECTION DIVIDERS
+   ================================ */
+.section-divider {
+    text-align: center;
+    padding: 0 64px;
+    position: relative;
+    z-index: 1;
+}
+
+.section-divider span {
+    font-family: var(--ff-mono);
+    font-size: 10px;
+    color: var(--dim);
+    letter-spacing: 4px;
+    opacity: .4;
+}
+
+/* ================================
+   RECOGNITION SECTION
+   ================================ */
+#recognition {
+    background: var(--bg);
+}
+
+.recognition-label {
+    font-family: var(--ff-mono);
+    font-size: 10px;
+    color: var(--dim);
+    letter-spacing: 2px;
+    margin-bottom: 28px;
+    margin-top: -40px;
+}
+
+.recognition-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.recognition-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 28px 32px;
+    transition: border-color .3s, transform .3s;
+}
+
+.recognition-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(0, 229, 255, .06);
+}
+
+.recognition-card blockquote {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.85;
+    font-style: italic;
+    margin-bottom: 16px;
+}
+
+.recognition-card cite {
+    font-family: var(--ff-mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    font-style: normal;
+    display: block;
+}
+
+/* ================================
+   SKILL TABS
+   ================================ */
+.skill-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 14px;
+}
+
+.skill-tab {
+    font-family: var(--ff-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid var(--border2);
+    color: var(--muted);
+    cursor: none;
+    transition: all .25s;
+}
+
+.skill-tab:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 14px rgba(0, 229, 255, .12);
+}
+
+.skill-tab.active {
+    background: rgba(0, 229, 255, .08);
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 20px rgba(0, 229, 255, .15);
+}
+
+.skill-panels {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+}
+
+.skill-panel {
+    display: none;
+}
+
+.skill-panel.active {
+    display: block;
+}
+
+.skill-panel .skg-lbl {
+    font-family: var(--ff-mono);
+    font-size: 9px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+.skill-panel .ski {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 9px;
+}
+
+/* ================================
+   NAV HIRE GLOW
+   ================================ */
+@keyframes hireGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 rgba(0, 229, 255, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 18px rgba(0, 229, 255, .45);
+    }
+}
+
+.nav-hire.glow {
+    animation: hireGlow 2s ease-in-out infinite;
+}
+
+/* ================================
    RESPONSIVE — TABLET
    ================================ */
 @media (max-width: 1024px) {
+
 
     /* Nav — show hamburger, collapse links */
     nav {
@@ -1793,6 +1985,16 @@ footer p {
     /* Contact form */
     .frow {
         grid-template-columns: 1fr;
+    }
+
+    /* Recognition */
+    .recognition-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Section dividers */
+    .section-divider {
+        padding: 0 28px;
     }
 }
 
@@ -1963,6 +2165,15 @@ footer p {
     .btn-ghost {
         padding: 11px 24px;
     }
+
+    .section-divider {
+        padding: 0 18px;
+    }
+
+    .skill-tab {
+        font-size: 9px;
+        padding: 8px 14px;
+    }
 }
 
 /* ================================
@@ -1985,6 +2196,7 @@ footer p {
     .chat-fab,
     .chat-close,
     .qb,
+    .skill-tab,
     .nav-toggle {
         cursor: auto;
     }
